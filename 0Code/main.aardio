@@ -1,0 +1,128 @@
+import win.ui;
+import win.util.tray;
+import winex;
+import win;
+import ustring;
+import process;
+/*DSG{{*/
+mainForm = win.form(text="PPTHide 窗口隐藏小工具 —— By Duyuxuan";right=431;bottom=207;border="thin";max=false)
+mainForm.add(
+button={cls="button";text="设置为热键";left=16;top=160;right=201;bottom=187;z=3};
+button2={cls="button";text="隐藏";left=232;top=88;right=312;bottom=112;z=7};
+button3={cls="button";text="显示";left=336;top=88;right=416;bottom=112;z=8};
+edit={cls="edit";text="Slide";left=232;top=160;right=417;bottom=185;edge=1;z=4};
+edit2={cls="edit";left=232;top=32;right=416;bottom=80;edge=1;multiline=1;vscroll=1;z=9};
+groupbox={cls="groupbox";text="放映窗口标题";left=224;top=128;right=424;bottom=195;edge=1;z=1};
+groupbox2={cls="groupbox";text="快捷键设置";left=8;top=104;right=208;bottom=195;edge=1;z=2};
+groupbox3={cls="groupbox";text="隐藏窗口标题";left=224;top=8;right=424;bottom=120;edge=1;z=6};
+hotkey={cls="hotkey";left=16;top=128;right=201;bottom=148;edge=1;group=1;z=5};
+static={cls="static";text="PPTHide";left=8;top=8;right=208;bottom=88;align="center";center=1;color=627430;font=LOGFONT(h=-37;name='MiSans Heavy';weight=700);notify=1;transparent=1;z=10};
+static2={cls="static";text="By Duyuxuan";left=72;top=56;right=208;bottom=88;align="center";center=1;font=LOGFONT(h=-14;name='MiSans';weight=630);transparent=1;z=11}
+)
+/*}}*/
+
+var hkId;
+var slidestate = true;
+mainForm.button.oncommand = function(id,event){
+
+	//删除之前注册的热键,hkId如果是null空值，此函数可忽略不做任何操
+	mainForm.unreghotkey(hkId);
+	
+	//重新注册系统热键;
+	hkId = mainForm.reghotkey(
+	
+		function(id,mod,vk){
+			var hwnd = winex.find(,mainForm.edit.text);
+			if(hwnd != null){
+				// mainForm.tray.pop(string.str(hwnd) + " " + mainForm.edit.text,"找到句柄");
+				if(slidestate){
+					win.show(hwnd, 0);
+					slidestate = false;
+				}
+				else {
+					win.setTopmost(hwnd);
+					win.show(hwnd, 1);
+					win.flash(hwnd,1,1);
+					slidestate = true;
+				}
+			}
+			
+		}
+		
+		//mainForm.hotkey.gethotkey()刚好返回2个值对应最后两个参数
+		,mainForm.hotkey.gethotkey()  
+	);
+}
+
+import win.util.tray;
+
+mainForm.tray = win.util.tray(mainForm,)  
+
+mainForm.onMinimize = function(lParam){
+	mainForm.tray.pop('可点击托盘重新打开主窗口',"PPTHide已缩小到托盘");
+	mainForm.show(false); //隐藏窗口
+	return true;//阻击默认消息传递,取消最小化过程
+}
+
+mainForm.onTrayMessage = {
+	[0x205/*_WM_RBUTTONUP*/  ] = function(wParam){ 
+	    //弹出托盘菜单以前,一定要前置主窗口中,
+	    //避免不点击菜单不会消失，父窗口隐藏也要这样做
+	    win.setForeground(mainForm.hwnd,true) //参数 2 为 true 避免显示最小化窗口
+	     
+		/*
+		下面创建托盘弹出菜单。
+		如果程序要开机启动到托盘，最好在这里创建菜单，在用户点击前不要创建菜单，
+		避免系统启动时 DPI 缩放前创建的菜单字体偏小（出现这情况的机率很小）。
+		如果不想重复创建菜单最好写到一个库里，然后在这里 import 即可避免上述问题。
+		*/
+		import win.ui.menu;
+		
+		mainForm.popmenu = win.ui.popmenu(mainForm);//创建弹出菜单
+		mainForm.popmenu.add('&PPTHide',function(id){
+			mainForm.show(true);	
+		});
+		mainForm.popmenu.add("&项目主页",function(){
+			process.openUrl("https://github.com/du-yuxuan/PPTHide");
+		})
+		mainForm.popmenu.add();
+		mainForm.popmenu.add('&退出',function(id){ mainForm.close() })	    
+	    		
+	    mainForm.popmenu.popup();
+	    mainForm.popmenu.close();
+	};
+	[0x202/*_WM_LBUTTONUP*/] = function(wParam){ 
+		mainForm.show(true);
+		win.flash(mainForm.hwnd,1,2);
+	};
+	[0x203/*_WM_LBUTTONDBLCLK*/] = function(wParam){ 
+		process.openUrl("https://github.com/du-yuxuan/PPTHide");
+	};
+	[0x404/*_PARAM_DESTROY*/] = function(wParam){ 
+		
+	};
+	[0x405/*_PARAM_CLICKED*/] = function(wParam){ 
+		
+	};
+}
+
+mainForm.button2.oncommand = function(id,event){
+	for title in string.lines(mainForm.edit2.text) {
+		var hwnd = winex.find(,title);
+		win.show(hwnd, 0);
+	}
+}
+
+mainForm.button3.oncommand = function(id,event){
+	for title in string.lines(mainForm.edit2.text){
+		var hwnd = winex.find(,title);
+		win.show(hwnd, 1);
+	}
+}
+
+mainForm.static.oncommand = function(id,event){
+	process.openUrl("https://github.com/du-yuxuan/PPTHide");  
+}
+
+mainForm.show();
+return win.loopMessage();
