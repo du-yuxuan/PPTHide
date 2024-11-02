@@ -47,11 +47,6 @@ PPTHide 辅助录制、演示的窗口隐藏小工具
 
 ### 上手指南
 
-<p>
-    <div style="width:100%; height:350px;border:none;text-align:center">
-		<iframe allowtransparency="yes" frameborder="0" width="300" height="300" src="/2Docs/PPTHide使用文档.html"/>
-	</div>
-</p>
 
 1. 到https://github.com/du-yuxuan/PPTHide/releases下载可执行文件
 2. 打开运行
