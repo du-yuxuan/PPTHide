@@ -47,6 +47,8 @@ PPTHide 辅助录制、演示的窗口隐藏小工具
 
 ### 上手指南
 
+<a href="https://www.bilibili.com/video/BV1JnSrYLEtL/?share_source=copy_web&vd_source=1a2bb5f3cb62ea83ea8af9543356ba17"><img src="./README.assets/PPTHide%E4%BD%BF%E7%94%A8%E6%96%87%E6%A1%A3_1.JPG" alt="PPTHide使用文档_1" /></a>**演示视频：**【【实用工具】【开发者自荐】【演示视频】PPTHide 辅助录制、演示的窗口隐藏小工具】 https://www.bilibili.com/video/BV1JnSrYLEtL/?share_source=copy_web&vd_source=1a2bb5f3cb62ea83ea8af9543356ba17
+
 
 1. 到https://github.com/du-yuxuan/PPTHide/releases下载可执行文件
 2. 打开运行

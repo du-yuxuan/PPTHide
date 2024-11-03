@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<project ver="10" name="PPTHide" libEmbed="true" icon="ico\logoico_0007.ico" ui="win" output="PPTHide.exe" CompanyName="Duyuxuan" FileDescription="PPTHide 可执行文件 —— By Duyuxuan" LegalCopyright="Copyright (C) Duyuxuan 2024" ProductName="PPTHide" InternalName="ppthide" FileVersion="0.0.1.7" ProductVersion="0.0.1.7" publishDir="/dist/" dstrip="true" local="false" ignored="false">
+<project ver="10" name="PPTHide" libEmbed="true" icon="E:\NewProject\2024.11.2_PPTHide\1Resource\logo\logoico_0007.ico" ui="win" output="PPTHide.exe" CompanyName="Duyuxuan" FileDescription="PPTHide 可执行文件 —— By Duyuxuan" LegalCopyright="Copyright (C) Duyuxuan 2024" ProductName="PPTHide" InternalName="ppthide" FileVersion="0.0.1.8" ProductVersion="0.0.1.8" publishDir="/dist/" dstrip="true" local="false" ignored="false">
 	<file name="main.aardio" path="main.aardio" comment="main.aardio"/>
 	<folder name="资源文件" path="res" embed="true" local="false" ignored="false"/>
 </project>
